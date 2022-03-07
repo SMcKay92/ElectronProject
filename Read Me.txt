@@ -1,0 +1,25 @@
+Issue: Add Window not communicating with Main window or Log, and errors with app seeing jquery and or require.
+
+Causes: various + issues related to security updates when using newer versions (e.g. npm 7.24.0+, electron 15.0.0+, node 14.17.6+) 
+
+Solution: See changes / suggestions made below:
+
+
+1) Removed reference to external css.
+
+
+2) If it can't find jquery, at your projects npm prompt type:
+
+npm install -g jquery 
+npm install --save jquery
+
+3) If it can't find require or gives no errors (versioning issue) then in Main.js for both Main and Add windows add:    
+ 
+webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false  
+  }
+
+4) Verify that this line of code in the Main window script does not have the word "item" in it.
+
+It should look similar to:  var allInput=["name: "+name, "Category : "+category];
